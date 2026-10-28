@@ -2,7 +2,34 @@
 
 One row per dataset, model or third-party file before it is downloaded for use (workspace rule 3).
 "Training allowed" and "Redistribution allowed" are read from the licence text, not assumed.
+The rows below were written and committed before the first download. `results/data_terms.json` records each download timestamp next to the entry id and the commit time of this file, so the order can be checked.
+
+## Terms read
+
+**EirGrid Group Open Data Licence** (`https://www.smartgriddashboard.com/all/open-data-license/`, linked from the dashboard footer, page last updated 28/10/2026, read on 2026-10-28). The licence states that it applies to "the EirGrid Group datasets as specified within the EirGrid or SONI Libraries, Smart Grid Dashboards, and information from any subsidiary bodies which form part of the EirGrid Group. This includes but is not limited to SEMO, SEMOpx and EWIC DAC." The grant is "a worldwide, royalty-free, perpetual, non-exclusive licence to use the Information". Permitted: "copy, publish, distribute and transmit the Information", "adapt the Information", "exploit the Information commercially and non-commercially for example, by combining it with other Information, or by including it in your own product or application." Required: "Acknowledge EirGrid Group as the source of the Information by including the following attribution statement 'Supported by EirGrid Group Data'" and "Ensure our other intellectual property rights, including all logos, design rights, patents and trademarks, are protected." Excluded: personal data, logos and crests, third-party rights, any suggestion of official status or endorsement. No warranty, and "EirGrid Group reserves the right to throttle or limit access to feeds as considered appropriate without warning." The licence may be revised without notice.
+
+**EirGrid website Legal Statement** (`https://www.eirgrid.ie/disclaimer`, the only legal link in the eirgrid.ie home page footer, read on 2026-10-28): "Materials on this website may not be copied, modified, reproduced, republished, uploaded, posted, transmitted, publicly displayed, performed, distributed or used for any public or commercial purposes except as expressly provided for or expressly authorised in writing by EirGrid". The Open Data Licence above is the express provision for the dashboard datasets, so the data use here falls under it. The Legal Statement also says the information "is provided 'as is' for information purposes only" and that "No warranty or representation is made in respect of the timeliness or accuracy of any information".
+
+**SEMOpx disclaimer** (`https://www.semopx.com/disclaimer`, read on 2026-10-28): "The materials and information contained on and in this website are provided for general information purposes only and are subject to change from time to time without notice. [...] All materials and information are provided "AS IS" and without warranties express, implied or otherwise howsoever arising. EirGrid plc and SONI Limited shall not be liable for inaccuracies, errors, omissions or misleading information contained in this website." The disclaimer says nothing about copyright or reuse. SEMOpx is named in the Open Data Licence above, which is the reuse permission relied on. The SEMOpx reports index (`https://reports.semopx.com/api/v1/documents/static-reports`) and the documents behind it are public, with no login and no key.
+
+**Outcome:** both sources permit the use (download, model fitting, publication of derived figures) under the Open Data Licence with the attribution statement. The ENTSO-E fallback is not needed.
+
+**Attribution used in this repo:** "Supported by EirGrid Group Data" appears in `README.md`, in `results/data_terms.json` and in the licence note next to any committed derived file.
+
+## Datasets
 
 | Item | Source URL | Licence (text or link) | Training allowed | Redistribution allowed | Checked on | Notes |
 |---|---|---|---|---|---|---|
-| | | | | | | |
+| EirGrid Smart Grid Dashboard, system demand, Republic of Ireland (entry id `sgd_demand`) | `https://www.smartgriddashboard.com/all/demand/`, data route used by the page itself: `https://www.smartgriddashboard.com/api/chart/?region=ROI&chartType=demand&dateRange=<range>&dateFrom=<dd-MMM-yyyy>&dateTo=<dd-MMM-yyyy>&areas=demandactual` | EirGrid Group Open Data Licence, quoted above | Yes. The licence permits adapting and exploiting the Information and combining it with other Information, which covers fitting a model on it. | Yes, with the attribution statement "Supported by EirGrid Group Data". Raw downloads stay in `data/raw/` (gitignored). The cleaned hourly series is committed under `data/prepared/` with the attribution. | 2026-10-28 | Fifteen-minute actual demand in MW. The route was read from the dashboard's own page scripts and is the request the browser makes. |
+| EirGrid Smart Grid Dashboard, wind generation, Republic of Ireland (entry id `sgd_wind`) | `https://www.smartgriddashboard.com/all/wind/`, same route with `chartType=wind&areas=windactual` | EirGrid Group Open Data Licence, quoted above | Yes, as above | Yes, with attribution, as above | 2026-10-28 | Fifteen-minute actual wind generation in MW. |
+| SEMOpx day-ahead market prices for the SEM (entry id `semopx_price`) | Index: `https://reports.semopx.com/api/v1/documents/static-reports?DPuG_ID=EA-025&Date=>=<start>&Date=<=<end>`. Files: `https://reports.semopx.com/documents/DAM_60MinHarmonisedReferencePrice_<YYYYMMDD>.xml` (report EA-025, "DAM 60Min Harmonised Reference Price", one file per delivery day). If a day is missing there, the fifteen-minute auction file EA-001 `MarketResult_SEM-DA_PWR-MRC-D+1_<timestamps>.csv` from the same index is the second route and is averaged to the hour. | EirGrid Group Open Data Licence, quoted above, which names SEMOpx. SEMOpx disclaimer quoted above (no warranty). | Yes, as above | Yes, with attribution, as above | 2026-10-28 | Hourly day-ahead price in EUR/MWh. The SEM day-ahead auction has traded fifteen-minute products since 1 October 2025, and EA-025 is the hourly reference price SEMOpx publishes for each delivery day at about 11:05 Irish time on the day before. |
+| Irish public holidays, `holidays` Python package | `https://pypi.org/project/holidays/` | MIT, stated on the package page ("MIT License") | Not applicable | Yes | 2026-10-28 | Country code IE. Version pinned in `pyproject.toml` once installed. |
+| ENTSO-E Transparency Platform (fallback named in the spec) | `https://transparency.entsoe.eu/` | Not read in detail: not used. | Not used | Not used | 2026-10-28 | Needs an account and a security token, and there is none in `../.env`. The two sources above permit the use, so the fallback was not needed. |
+
+## Packages
+
+Direct dependencies pinned in `pyproject.toml` and `requirements.lock`. The packages are used, not redistributed. Rows are filled after the install.
+
+| Item | Source URL | Licence (text or link) | Training allowed | Redistribution allowed | Checked on | Notes |
+|---|---|---|---|---|---|---|
+| (filled after the install) | | | | | | |
