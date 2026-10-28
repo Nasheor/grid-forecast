@@ -21,3 +21,6 @@ models/
 .pytest_cache/
 .ruff_cache/
 .ipynb_checkpoints/
+mlruns_smoke/
+results/smoke/
+data/prepared/*.parquet

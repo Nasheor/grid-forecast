@@ -1,34 +1,71 @@
-"""Command line entry point. ``python -m <pkg> smoke`` must finish in under 10 minutes and write
-``results/smoke.json`` plus ``results/readme_numbers.json`` (label to value string, asserted against README.md).
-Units replace the smoke body with their real run and keep the two output files."""
+"""Command line entry point.
+
+``download`` fetches the three series for a date range (default: 23 June 2025 to 30 September 2026) after
+the licence check, ``prepare`` cleans them to hourly UTC frames, ``run`` walks the monthly folds with both
+models, logs to MLflow, registers the champions, checks the API and writes ``results/`` and the README
+tables, ``smoke`` is the short version of ``run`` (two folds, capped rounds and epochs, under ten minutes)
+that writes ``results/smoke.json`` and ``results/readme_numbers.json``, and ``serve`` starts the API.
+"""
 from __future__ import annotations
 
 import argparse
 import datetime as dt
 import json
 import sys
-from pathlib import Path
 
-ROOT = Path(__file__).resolve().parents[2]
-RESULTS = ROOT / "results"
-
-
-def smoke() -> int:
-    RESULTS.mkdir(exist_ok=True)
-    out = {"smoke_ok": "yes", "generated_at": dt.datetime.now(dt.timezone.utc).isoformat(timespec="seconds")}
-    (RESULTS / "smoke.json").write_text(json.dumps(out, indent=2), encoding="utf-8")
-    (RESULTS / "readme_numbers.json").write_text(json.dumps({"smoke_ok": "yes"}, indent=2), encoding="utf-8")
-    print("smoke ok")
-    return 0
+from . import DOWNLOAD_START, PERIOD_END
 
 
 def main(argv: list[str] | None = None) -> int:
     p = argparse.ArgumentParser(prog="grid_forecast")
     sub = p.add_subparsers(dest="cmd", required=True)
-    sub.add_parser("smoke", help="short reproducible run that regenerates results/")
+    d = sub.add_parser("download", help="fetch demand, wind and price into data/raw/ (licence rows first)")
+    d.add_argument("--start", default=DOWNLOAD_START.isoformat())
+    d.add_argument("--end", default=PERIOD_END.isoformat())
+    d.add_argument("--no-dashboard", action="store_true", help="skip the Smart Grid Dashboard second route")
+    sub.add_parser("prepare", help="clean data/raw/ into hourly UTC frames under data/prepared/")
+    r = sub.add_parser("run", help="full walk-forward run, MLflow logging, champion registration, API check, README tables")
+    r.add_argument("--folds", type=int, default=None, help="keep only the last N folds (default: all)")
+    r.add_argument("--lgbm-rounds", type=int, default=2000)
+    r.add_argument("--gru-epochs", type=int, default=20)
+    r.add_argument("--seed", type=int, default=42)
+    sub.add_parser("smoke", help="two folds, capped models, own MLflow store, results/smoke.json")
+    s = sub.add_parser("serve", help="start the FastAPI service with uvicorn")
+    s.add_argument("--host", default="127.0.0.1")
+    s.add_argument("--port", type=int, default=8000)
     args = p.parse_args(argv)
+
+    if args.cmd == "download":
+        from .download import download
+
+        terms = download(dt.date.fromisoformat(args.start), dt.date.fromisoformat(args.end), try_dashboard=not args.no_dashboard)
+        for k, v in terms["entries"].items():
+            print(k, v.get("status", ""), [(f.get("name"), f.get("rows"), f.get("missing_steps")) for f in v.get("files", [])])
+        return 0
+    if args.cmd == "prepare":
+        from .prepare import prepare
+
+        report = prepare()
+        for s_name, q in report["series"].items():
+            worst = max(v["missing_share"] for v in q["months"].values())
+            print(f"{s_name}: {len(q['months'])} months, worst missing share {worst:.2%}, dropped {q['dropped_months']}")
+        return 0
+    if args.cmd == "run":
+        from .pipeline import run
+
+        summary = run(n_folds=args.folds, lgbm_rounds=args.lgbm_rounds, gru_epochs=args.gru_epochs, seed=args.seed)
+        print(json.dumps({s_name: {"champion": v["champion"], "folds": v["folds"]} for s_name, v in summary["series"].items()}, indent=2))
+        return 0
     if args.cmd == "smoke":
-        return smoke()
+        from .pipeline import smoke
+
+        out = smoke()
+        return 0 if out["smoke_ok"] == "yes" else 1
+    if args.cmd == "serve":
+        import uvicorn
+
+        uvicorn.run("grid_forecast.api:app", host=args.host, port=args.port)
+        return 0
     return 2
 
 
