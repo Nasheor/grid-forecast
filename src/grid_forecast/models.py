@@ -6,8 +6,10 @@ whole window with the round count the early stopping found.
 
 GRU: one small PyTorch network per series on the CPU. Input: the last 168 known hours of the target series
 (standardised with training statistics) through a one-layer GRU with hidden size 64, joined with the calendar
-of the 24 target hours, two linear layers, 24 outputs. Adam, at most 20 epochs, early stopping on the last
-fourteen days, fixed seed, deterministic algorithms, then a refit for the epoch count found.
+of the 24 target hours, two linear layers, 24 outputs. Adam with learning rate 2e-3 and batches of 16 origins
+(a comparison on seven folds, recorded in ``results/gru_settings_check.json``, showed that batches of 32 at
+1e-3 gave the early folds too few gradient steps), at most 20 epochs, early stopping on the last fourteen
+days, fixed seed, deterministic algorithms, then a refit for the epoch count found.
 
 Both can be wrapped as an MLflow pyfunc that takes the feature frame and returns one value per row.
 """
@@ -120,7 +122,7 @@ class GRUNet(torch.nn.Module):
 class GRUForecaster:
     name = "gru"
 
-    def __init__(self, series: str, hidden: int = 64, epochs: int = 20, patience: int = 3, lr: float = 1e-3, batch_size: int = 32, seed: int = SEED):
+    def __init__(self, series: str, hidden: int = 64, epochs: int = 20, patience: int = 3, lr: float = 2e-3, batch_size: int = 16, seed: int = SEED):
         self.series = series
         self.hidden = int(hidden)
         self.epochs = int(epochs)
@@ -140,14 +142,26 @@ class GRUForecaster:
 
     @staticmethod
     def _groups(frame: pd.DataFrame) -> tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
-        """Per origin: window (N,168,1), calendar (N,24,7), target (N,24), scored mask (N,24). Frame order is kept."""
+        """Per origin: window (N,168,1), calendar (N,24,7), target (N,24), scored mask (N,24). Frame order is kept.
+
+        A frame to predict on may carry no target at all (the API hands the registered model the input
+        columns only), in which case the target comes back as NaN and the mask as all False.
+        """
         n = len(frame) // HORIZON
         if n * HORIZON != len(frame):
             raise ValueError("frame must hold whole 24-row origins")
         win = frame[WINDOW_COLUMNS].to_numpy(dtype=float).reshape(n, HORIZON, -1)[:, 0, :][:, :, None]
         cal = _calendar_tensor(frame).reshape(n, HORIZON, CAL_DIM)
-        y = frame["target"].to_numpy(dtype=float).reshape(n, HORIZON)
-        mask = ~frame["target_missing"].to_numpy(dtype=bool).reshape(n, HORIZON)
+        if "target" in frame.columns:
+            y = frame["target"].to_numpy(dtype=float).reshape(n, HORIZON)
+            if "target_missing" in frame.columns:
+                missing = frame["target_missing"].to_numpy(dtype=bool)
+            else:
+                missing = np.isnan(frame["target"].to_numpy(dtype=float))
+            mask = ~missing.reshape(n, HORIZON)
+        else:
+            y = np.full((n, HORIZON), np.nan)
+            mask = np.zeros((n, HORIZON), dtype=bool)
         return win, cal, y, mask
 
     def _seed(self) -> torch.Generator:

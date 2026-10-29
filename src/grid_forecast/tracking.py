@@ -33,7 +33,9 @@ class ForecasterModel(mlflow.pyfunc.PythonModel):
 
 
 def setup(uri: str | None = None, prefix: str = "grid-forecast") -> str:
-    uri = uri or mlflow_uri()
+    """Point MLflow at ``uri`` (default: the repo's ``mlruns``), with the file-store opt-in set either way."""
+    default = mlflow_uri()
+    uri = uri or default
     mlflow.set_tracking_uri(uri)
     return uri
 

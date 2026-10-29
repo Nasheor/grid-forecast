@@ -20,7 +20,7 @@ import holidays
 import numpy as np
 import pandas as pd
 
-from . import DOWNLOAD_START, PERIOD_END, PREPARED, RAW, RESULTS, SERIES, TZ
+from . import DOWNLOAD_START, PERIOD_END, PREPARED, RAW, RESULTS, SERIES, SERIES_START, TZ
 
 MAX_INTERPOLATED_HOURS = 3
 MAX_MISSING_SHARE = 0.05
@@ -124,8 +124,15 @@ def add_calendar(df: pd.DataFrame) -> pd.DataFrame:
     return out
 
 
-def quality(df: pd.DataFrame, series: str) -> dict:
-    g = df.assign(ym=df["local_day"].map(lambda d: f"{d.year:04d}-{d.month:02d}")).groupby("ym")
+def quality(df: pd.DataFrame, series: str, start: dt.date | None = None, end: dt.date | None = None) -> dict:
+    """Per local month inside ``start`` to ``end``: expected hours, hours present, missing share, interpolated hours, long gaps."""
+    inside = df
+    if start is not None:
+        start = max(start, SERIES_START.get(series, start))
+        inside = inside[inside["local_day"] >= start]
+    if end is not None:
+        inside = inside[inside["local_day"] <= end]
+    g = inside.assign(ym=inside["local_day"].map(lambda d: f"{d.year:04d}-{d.month:02d}")).groupby("ym")
     months = {}
     for ym, part in g:
         expected = int(len(part))
@@ -155,7 +162,7 @@ def prepare_series(series: str, raw: Path = RAW, out_dir: Path = PREPARED, start
     df = on_grid(df, lo - pd.Timedelta(hours=1), hi + pd.Timedelta(hours=1))
     df = fill_gaps(df)
     df = add_calendar(df)
-    q = quality(df, series)
+    q = quality(df, series, start, end)
     out_dir.mkdir(parents=True, exist_ok=True)
     df.to_parquet(out_dir / f"{series}.parquet", index=False)
     csv = df.copy()

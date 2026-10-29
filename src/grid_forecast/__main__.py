@@ -29,7 +29,13 @@ def main(argv: list[str] | None = None) -> int:
     r.add_argument("--lgbm-rounds", type=int, default=2000)
     r.add_argument("--gru-epochs", type=int, default=20)
     r.add_argument("--seed", type=int, default=42)
+    r.add_argument("--results-dir", default=None, help="write results here instead of results/ (the determinism run uses results/determinism)")
+    r.add_argument("--docs-dir", default=None, help="write the failure plots here instead of docs/")
+    r.add_argument("--tracking-uri", default=None, help="MLflow tracking URI for this run (default: file store under mlruns/)")
+    r.add_argument("--label", default="full", help="label written into summary.json")
+    r.add_argument("--no-readme", action="store_true", help="do not rewrite the README tables or results/readme_numbers.json")
     sub.add_parser("smoke", help="two folds, capped models, own MLflow store, results/smoke.json")
+    sub.add_parser("determinism", help="compare results/ with results/determinism/ (a second full run with the same seed)")
     s = sub.add_parser("serve", help="start the FastAPI service with uvicorn")
     s.add_argument("--host", default="127.0.0.1")
     s.add_argument("--port", type=int, default=8000)
@@ -51,9 +57,15 @@ def main(argv: list[str] | None = None) -> int:
             print(f"{s_name}: {len(q['months'])} months, worst missing share {worst:.2%}, dropped {q['dropped_months']}")
         return 0
     if args.cmd == "run":
+        from pathlib import Path
+
+        from . import DOCS, RESULTS
         from .pipeline import run
 
-        summary = run(n_folds=args.folds, lgbm_rounds=args.lgbm_rounds, gru_epochs=args.gru_epochs, seed=args.seed)
+        results = Path(args.results_dir) if args.results_dir else RESULTS
+        docs = Path(args.docs_dir) if args.docs_dir else (DOCS if args.results_dir is None else results)
+        summary = run(n_folds=args.folds, lgbm_rounds=args.lgbm_rounds, gru_epochs=args.gru_epochs, seed=args.seed, results=results, docs=docs,
+                      tracking_uri=args.tracking_uri, label=args.label, write_readme=not args.no_readme)
         print(json.dumps({s_name: {"champion": v["champion"], "folds": v["folds"]} for s_name, v in summary["series"].items()}, indent=2))
         return 0
     if args.cmd == "smoke":
@@ -61,6 +73,11 @@ def main(argv: list[str] | None = None) -> int:
 
         out = smoke()
         return 0 if out["smoke_ok"] == "yes" else 1
+    if args.cmd == "determinism":
+        from .pipeline import compare_runs
+
+        rep = compare_runs()
+        return 0 if rep["lightgbm_identical"] and rep["gru_within_1_percent"] else 1
     if args.cmd == "serve":
         import uvicorn
 

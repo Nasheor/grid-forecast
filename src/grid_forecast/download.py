@@ -302,17 +302,23 @@ def parse_ea025(path: Path) -> pd.DataFrame:
         if res != "PT60M":
             raise ValueError(f"{path.name}: resolution {res}, expected PT60M")
         t0 = pd.Timestamp(interval.split("/")[0]).tz_convert("UTC").tz_localize(None)
+        t1 = pd.Timestamp(interval.split("/")[1]).tz_convert("UTC").tz_localize(None)
+        prev = None
         for iv in period.findall(q("Interval"), ns):
             hhmm = iv.find(q("StartTime"), ns).get("v")
             price = iv.find(q("MarketPriceRoundedAmount"), ns).get("v")
             hh, mm = (int(x) for x in hhmm.split(":"))
+            # Start times are UTC clock hours inside the document interval, listed in order. The ones after
+            # midnight belong to the next UTC day, and on the 25-hour clock-change day the first clock hour
+            # repeats at the end, so each timestamp must be later than the one before it.
             ts = t0.normalize() + pd.Timedelta(hours=hh, minutes=mm)
-            if ts < t0:
+            while ts < t0 or (prev is not None and ts <= prev):
                 ts += pd.Timedelta(days=1)
+            if ts >= t1:
+                raise ValueError(f"{path.name}: interval start {hhmm} falls outside {interval}")
             rows.append({"ts_utc": ts, "value": float(price)})
+            prev = ts
     df = pd.DataFrame(rows)
-    # Interval start times are given as clock hours inside the UTC document interval, so the ones after
-    # midnight belong to the next UTC day: order them by their offset from the interval start.
     df = df.sort_values("ts_utc").drop_duplicates("ts_utc").reset_index(drop=True)
     return df
 
@@ -323,11 +329,14 @@ def download_price(client: httpx.Client, start: dt.date, end: dt.date, terms: di
     folder = RAW / "semopx" / SEMOPX_REPORT
     folder.mkdir(parents=True, exist_ok=True)
     rec = terms["entries"].setdefault(entry, {"terms_url": TERMS_URLS[entry], "index_url": SEMOPX_INDEX, "files": []})
-    items = semopx_index(client, start, end)
+    # The document for delivery day D covers D in UTC terms (22:00 or 23:00 the evening before), so the last local
+    # hour of ``end`` sits in the document of the day after. One extra day is fetched and cut back in prepare.
+    last = end + dt.timedelta(days=1)
+    items = semopx_index(client, start, last)
     by_day: dict[str, dict] = {}
     for it in items:
         by_day.setdefault(it["Date"][:10], it)
-    expected = pd.date_range(start, end, freq="D").strftime("%Y-%m-%d").tolist()
+    expected = pd.date_range(start, last, freq="D").strftime("%Y-%m-%d").tolist()
     missing_days = [d for d in expected if d not in by_day]
     names = [by_day[day]["ResourceName"] for day in expected if day in by_day]
     to_fetch = [n for n in names if not (folder / n).exists()]
@@ -346,14 +355,16 @@ def download_price(client: httpx.Client, start: dt.date, end: dt.date, terms: di
             if n_new % 50 == 0:
                 print(f"semopx: {n_new} of {len(to_fetch)} documents fetched ({done})", flush=True)
     frames = [parse_ea025(folder / n) for n in names]
+    written = sorted(dt.datetime.fromtimestamp((folder / n).stat().st_mtime, dt.UTC) for n in names)
+    written_range = {"first": written[0].isoformat(timespec="seconds"), "last": written[-1].isoformat(timespec="seconds")} if written else {}
     df = pd.concat(frames, ignore_index=True).sort_values("ts_utc").drop_duplicates("ts_utc").reset_index(drop=True)
     out = RAW / "semopx" / f"price_{start.isoformat()}_{end.isoformat()}.csv"
     df.to_csv(out, index=False, date_format="%Y-%m-%dT%H:%M:%SZ")
     rec["documents"] = {"report": SEMOPX_REPORT, "report_name": "DAM 60Min Harmonised Reference Price", "days_requested": len(expected),
                         "days_found": len(expected) - len(missing_days), "missing_days": missing_days, "downloaded_now": n_new,
-                        "first_download_at": first_download, "folder": str(folder.relative_to(ROOT)),
+                        "first_download_at": first_download, "documents_written": written_range, "folder": str(folder.relative_to(ROOT)),
                         "sha256_of_documents": {p.name: _sha256(p) for p in sorted(folder.glob("*.xml"))}}
-    rec["files"].append({"name": out.name, "sha256": _sha256(out), "downloaded_at": first_download or _now(), **_span_and_gaps(df["ts_utc"], pd.Timedelta(hours=1))})
+    rec["files"].append({"name": out.name, "sha256": _sha256(out), "downloaded_at": first_download or written_range.get("first"), **_span_and_gaps(df["ts_utc"], pd.Timedelta(hours=1))})
     return df
 
 

@@ -193,3 +193,34 @@ def smoke() -> dict:
     (RESULTS / "smoke.json").write_text(json.dumps(out, indent=2), encoding="utf-8")
     print(json.dumps(out, indent=2))
     return out
+
+
+def compare_runs(a: Path = RESULTS, b: Path = RESULTS / "determinism", out: Path = RESULTS / "determinism.json") -> dict:
+    """Compare two full runs with the same seed: LightGBM metrics must match exactly, GRU metrics within 1 %."""
+    report: dict = {"run_a": str(a.relative_to(ROOT)), "run_b": str(b.relative_to(ROOT)), "series": {}, "generated_at": _now()}
+    lgbm_identical = True
+    gru_within_1pct = True
+    for s in SERIES:
+        ma = json.loads((a / f"metrics_{s}.json").read_text(encoding="utf-8"))
+        mb = json.loads((b / f"metrics_{s}.json").read_text(encoding="utf-8"))
+        rows = []
+        worst_gru = 0.0
+        for fa, fb in zip(ma["folds"], mb["folds"], strict=True):
+            la, lb = fa["models"]["lightgbm"]["mae"], fb["models"]["lightgbm"]["mae"]
+            ga, gb = fa["models"]["gru"]["mae"], fb["models"]["gru"]["mae"]
+            rel = abs(ga - gb) / max(abs(ga), 1e-9)
+            worst_gru = max(worst_gru, rel)
+            same = la == lb and fa["models"]["lightgbm"]["rmse"] == fb["models"]["lightgbm"]["rmse"]
+            lgbm_identical &= same
+            gru_within_1pct &= rel < 0.01
+            rows.append({"fold": fa["fold"], "test_month": fa["test_month"], "lightgbm_mae_a": la, "lightgbm_mae_b": lb, "lightgbm_identical": same,
+                         "gru_mae_a": ga, "gru_mae_b": gb, "gru_relative_difference": rel})
+        report["series"][s] = {"folds": rows, "gru_worst_relative_difference": worst_gru,
+                               "mean_fold_mae_a": {m: ma["summary"]["models"][m]["mean_fold_mae"] for m in ("lightgbm", "gru")},
+                               "mean_fold_mae_b": {m: mb["summary"]["models"][m]["mean_fold_mae"] for m in ("lightgbm", "gru")}}
+    report["lightgbm_identical"] = bool(lgbm_identical)
+    report["gru_within_1_percent"] = bool(gru_within_1pct)
+    report["gru_worst_relative_difference"] = max(v["gru_worst_relative_difference"] for v in report["series"].values())
+    out.write_text(json.dumps(report, indent=2), encoding="utf-8")
+    print(json.dumps({k: v for k, v in report.items() if k != "series"}, indent=2))
+    return report

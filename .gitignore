@@ -24,3 +24,6 @@ models/
 mlruns_smoke/
 results/smoke/
 data/prepared/*.parquet
+mlruns_*/
+results/determinism/
+results/smoke.json
