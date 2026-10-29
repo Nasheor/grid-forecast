@@ -1,0 +1,118 @@
+{
+  "fold_runs": {
+    "demand": [
+      "25750466f3fe448d9bfcb35f1380e283",
+      "04764467df854961ad8554502ccde526",
+      "e9c547a1c3cf4ce387eaf9fdcf6b1fa1",
+      "c722f423d82f43b8aeb81e2bf1b24d86",
+      "ec46e132162746d19333cff0ad4e8091",
+      "524f20c2f37542768151c1485a9d5e0e",
+      "bdc9b29049dd4ab7858e6a15c99d6ed6",
+      "dcfa2c0973734579ac892fedba4b5cf8",
+      "137712de26a84360973ba601ce17ed1e",
+      "cd6e8e96c42644a682ab12e85e531ec5",
+      "8a82846c06434094956ed80455c2d0e3",
+      "9b85ab7e38284d6aac00547c6b1906cc"
+    ],
+    "wind": [
+      "063e04c5346441b7bb248fe0be8d66ae",
+      "19c1766bcb0c4f71813ac8566f0fee72",
+      "d30896d546ab4b7885d172ecebdccd44",
+      "322a16f09da54d268eac2a81314c350d",
+      "8b257e5ca5024167bcab3ba93436cc34",
+      "3089fe789f04488885c7e274b98cc775",
+      "61cf88eefeb241578a70b0a47aaf8b6f",
+      "959460c3c3054121a43831a8bcc359b8",
+      "fc6684244aa04a7abfc53ebe79f13f8e",
+      "1a238ebac87d45948703433fb7b921cc",
+      "f17304f4c1014c3fa15531cdd694da10",
+      "8ec3ccf38f254d9db8592cf54eee99e3"
+    ],
+    "price": [
+      "bdb0d32fcb474c6faeeab2f5367c5d78",
+      "25b292621c40455f84e29b5a57edaece",
+      "d0d6acf63d4441e3ab727d735c23ed16",
+      "4f210a13a882429aac0b77ca6d48b1a8",
+      "6b770092ad7642e9991263b758ebe0ad",
+      "3d2211fc83c54cf38884bee8b2a16384",
+      "861c8d618ab34040ba8e98c064c08b9a",
+      "83baf6c61a214c18a6a175f758c77a79",
+      "1674968ca13d4734b6294be766be2961"
+    ]
+  },
+  "aggregate_runs": {
+    "demand": {
+      "lightgbm": "954a0c993ecf472d9139bf16f1e63447",
+      "gru": "ad1d03d623d74d64bc845b9b9a8c80c5"
+    },
+    "wind": {
+      "lightgbm": "f850a35e1c42439bb250ac65af1cf576",
+      "gru": "f75c78a26d8a4060959daceadf9caa0d"
+    },
+    "price": {
+      "lightgbm": "0c8e2c2f698b40e3b24f55455cdfffd2",
+      "gru": "c6a7a777e6874365ba2791df0518f153"
+    }
+  },
+  "champions": {
+    "demand": {
+      "registered_model": "grid-forecast-demand",
+      "version": 1,
+      "alias": "champion",
+      "run_id": "dc6d37a34dcd4d388f4ed09340a5557e",
+      "model": "lightgbm",
+      "refit": {
+        "best_iteration": 175,
+        "fit_seconds": 0.58,
+        "train_rows": 10632,
+        "valid_rows": 336
+      },
+      "refit_seconds": 0.6
+    },
+    "wind": {
+      "registered_model": "grid-forecast-wind",
+      "version": 1,
+      "alias": "champion",
+      "run_id": "8b7b6801c1244eceaa8a695fab547ec8",
+      "model": "gru",
+      "refit": {
+        "best_epoch": 16,
+        "fit_seconds": 52.25,
+        "train_origins": 443,
+        "valid_origins": 14
+      },
+      "refit_seconds": 52.3
+    },
+    "price": {
+      "registered_model": "grid-forecast-price",
+      "version": 1,
+      "alias": "champion",
+      "run_id": "6fcaadf835b144f2b3968c919b7b80f6",
+      "model": "lightgbm",
+      "refit": {
+        "best_iteration": 78,
+        "fit_seconds": 0.46,
+        "train_rows": 8424,
+        "valid_rows": 336
+      },
+      "refit_seconds": 0.5
+    }
+  },
+  "run_counts": {
+    "demand": {
+      "champion": 1,
+      "aggregate": 2,
+      "fold": 12
+    },
+    "wind": {
+      "champion": 1,
+      "aggregate": 2,
+      "fold": 12
+    },
+    "price": {
+      "champion": 1,
+      "aggregate": 2,
+      "fold": 9
+    }
+  }
+}

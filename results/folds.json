@@ -1,0 +1,371 @@
+{
+  "demand": [
+    {
+      "fold": 1,
+      "series": "demand",
+      "test_month": "2025-10",
+      "train_start": "2025-07-01",
+      "train_end": "2025-09-30",
+      "valid_start": "2025-09-17",
+      "test_start": "2025-10-01",
+      "test_end": "2025-10-31",
+      "train_months": 3
+    },
+    {
+      "fold": 2,
+      "series": "demand",
+      "test_month": "2025-11",
+      "train_start": "2025-07-01",
+      "train_end": "2025-10-31",
+      "valid_start": "2025-10-18",
+      "test_start": "2025-11-01",
+      "test_end": "2025-11-30",
+      "train_months": 4
+    },
+    {
+      "fold": 3,
+      "series": "demand",
+      "test_month": "2025-12",
+      "train_start": "2025-07-01",
+      "train_end": "2025-11-30",
+      "valid_start": "2025-11-17",
+      "test_start": "2025-12-01",
+      "test_end": "2025-12-31",
+      "train_months": 5
+    },
+    {
+      "fold": 4,
+      "series": "demand",
+      "test_month": "2026-01",
+      "train_start": "2025-07-01",
+      "train_end": "2025-12-31",
+      "valid_start": "2025-12-18",
+      "test_start": "2026-01-01",
+      "test_end": "2026-01-31",
+      "train_months": 6
+    },
+    {
+      "fold": 5,
+      "series": "demand",
+      "test_month": "2026-02",
+      "train_start": "2025-07-01",
+      "train_end": "2026-01-31",
+      "valid_start": "2026-01-18",
+      "test_start": "2026-02-01",
+      "test_end": "2026-02-28",
+      "train_months": 7
+    },
+    {
+      "fold": 6,
+      "series": "demand",
+      "test_month": "2026-03",
+      "train_start": "2025-07-01",
+      "train_end": "2026-02-28",
+      "valid_start": "2026-02-15",
+      "test_start": "2026-03-01",
+      "test_end": "2026-03-31",
+      "train_months": 8
+    },
+    {
+      "fold": 7,
+      "series": "demand",
+      "test_month": "2026-04",
+      "train_start": "2025-07-01",
+      "train_end": "2026-03-31",
+      "valid_start": "2026-03-18",
+      "test_start": "2026-04-01",
+      "test_end": "2026-04-30",
+      "train_months": 9
+    },
+    {
+      "fold": 8,
+      "series": "demand",
+      "test_month": "2026-05",
+      "train_start": "2025-07-01",
+      "train_end": "2026-04-30",
+      "valid_start": "2026-04-17",
+      "test_start": "2026-05-01",
+      "test_end": "2026-05-31",
+      "train_months": 10
+    },
+    {
+      "fold": 9,
+      "series": "demand",
+      "test_month": "2026-06",
+      "train_start": "2025-07-01",
+      "train_end": "2026-05-31",
+      "valid_start": "2026-05-18",
+      "test_start": "2026-06-01",
+      "test_end": "2026-06-30",
+      "train_months": 11
+    },
+    {
+      "fold": 10,
+      "series": "demand",
+      "test_month": "2026-07",
+      "train_start": "2025-07-01",
+      "train_end": "2026-06-30",
+      "valid_start": "2026-06-17",
+      "test_start": "2026-07-01",
+      "test_end": "2026-07-31",
+      "train_months": 12
+    },
+    {
+      "fold": 11,
+      "series": "demand",
+      "test_month": "2026-08",
+      "train_start": "2025-07-01",
+      "train_end": "2026-07-31",
+      "valid_start": "2026-07-18",
+      "test_start": "2026-08-01",
+      "test_end": "2026-08-31",
+      "train_months": 13
+    },
+    {
+      "fold": 12,
+      "series": "demand",
+      "test_month": "2026-09",
+      "train_start": "2025-07-01",
+      "train_end": "2026-08-31",
+      "valid_start": "2026-08-18",
+      "test_start": "2026-09-01",
+      "test_end": "2026-09-30",
+      "train_months": 14
+    }
+  ],
+  "wind": [
+    {
+      "fold": 1,
+      "series": "wind",
+      "test_month": "2025-10",
+      "train_start": "2025-07-01",
+      "train_end": "2025-09-30",
+      "valid_start": "2025-09-17",
+      "test_start": "2025-10-01",
+      "test_end": "2025-10-31",
+      "train_months": 3
+    },
+    {
+      "fold": 2,
+      "series": "wind",
+      "test_month": "2025-11",
+      "train_start": "2025-07-01",
+      "train_end": "2025-10-31",
+      "valid_start": "2025-10-18",
+      "test_start": "2025-11-01",
+      "test_end": "2025-11-30",
+      "train_months": 4
+    },
+    {
+      "fold": 3,
+      "series": "wind",
+      "test_month": "2025-12",
+      "train_start": "2025-07-01",
+      "train_end": "2025-11-30",
+      "valid_start": "2025-11-17",
+      "test_start": "2025-12-01",
+      "test_end": "2025-12-31",
+      "train_months": 5
+    },
+    {
+      "fold": 4,
+      "series": "wind",
+      "test_month": "2026-01",
+      "train_start": "2025-07-01",
+      "train_end": "2025-12-31",
+      "valid_start": "2025-12-18",
+      "test_start": "2026-01-01",
+      "test_end": "2026-01-31",
+      "train_months": 6
+    },
+    {
+      "fold": 5,
+      "series": "wind",
+      "test_month": "2026-02",
+      "train_start": "2025-07-01",
+      "train_end": "2026-01-31",
+      "valid_start": "2026-01-18",
+      "test_start": "2026-02-01",
+      "test_end": "2026-02-28",
+      "train_months": 7
+    },
+    {
+      "fold": 6,
+      "series": "wind",
+      "test_month": "2026-03",
+      "train_start": "2025-07-01",
+      "train_end": "2026-02-28",
+      "valid_start": "2026-02-15",
+      "test_start": "2026-03-01",
+      "test_end": "2026-03-31",
+      "train_months": 8
+    },
+    {
+      "fold": 7,
+      "series": "wind",
+      "test_month": "2026-04",
+      "train_start": "2025-07-01",
+      "train_end": "2026-03-31",
+      "valid_start": "2026-03-18",
+      "test_start": "2026-04-01",
+      "test_end": "2026-04-30",
+      "train_months": 9
+    },
+    {
+      "fold": 8,
+      "series": "wind",
+      "test_month": "2026-05",
+      "train_start": "2025-07-01",
+      "train_end": "2026-04-30",
+      "valid_start": "2026-04-17",
+      "test_start": "2026-05-01",
+      "test_end": "2026-05-31",
+      "train_months": 10
+    },
+    {
+      "fold": 9,
+      "series": "wind",
+      "test_month": "2026-06",
+      "train_start": "2025-07-01",
+      "train_end": "2026-05-31",
+      "valid_start": "2026-05-18",
+      "test_start": "2026-06-01",
+      "test_end": "2026-06-30",
+      "train_months": 11
+    },
+    {
+      "fold": 10,
+      "series": "wind",
+      "test_month": "2026-07",
+      "train_start": "2025-07-01",
+      "train_end": "2026-06-30",
+      "valid_start": "2026-06-17",
+      "test_start": "2026-07-01",
+      "test_end": "2026-07-31",
+      "train_months": 12
+    },
+    {
+      "fold": 11,
+      "series": "wind",
+      "test_month": "2026-08",
+      "train_start": "2025-07-01",
+      "train_end": "2026-07-31",
+      "valid_start": "2026-07-18",
+      "test_start": "2026-08-01",
+      "test_end": "2026-08-31",
+      "train_months": 13
+    },
+    {
+      "fold": 12,
+      "series": "wind",
+      "test_month": "2026-09",
+      "train_start": "2025-07-01",
+      "train_end": "2026-08-31",
+      "valid_start": "2026-08-18",
+      "test_start": "2026-09-01",
+      "test_end": "2026-09-30",
+      "train_months": 14
+    }
+  ],
+  "price": [
+    {
+      "fold": 1,
+      "series": "price",
+      "test_month": "2026-01",
+      "train_start": "2025-10-01",
+      "train_end": "2025-12-31",
+      "valid_start": "2025-12-18",
+      "test_start": "2026-01-01",
+      "test_end": "2026-01-31",
+      "train_months": 3
+    },
+    {
+      "fold": 2,
+      "series": "price",
+      "test_month": "2026-02",
+      "train_start": "2025-10-01",
+      "train_end": "2026-01-31",
+      "valid_start": "2026-01-18",
+      "test_start": "2026-02-01",
+      "test_end": "2026-02-28",
+      "train_months": 4
+    },
+    {
+      "fold": 3,
+      "series": "price",
+      "test_month": "2026-03",
+      "train_start": "2025-10-01",
+      "train_end": "2026-02-28",
+      "valid_start": "2026-02-15",
+      "test_start": "2026-03-01",
+      "test_end": "2026-03-31",
+      "train_months": 5
+    },
+    {
+      "fold": 4,
+      "series": "price",
+      "test_month": "2026-04",
+      "train_start": "2025-10-01",
+      "train_end": "2026-03-31",
+      "valid_start": "2026-03-18",
+      "test_start": "2026-04-01",
+      "test_end": "2026-04-30",
+      "train_months": 6
+    },
+    {
+      "fold": 5,
+      "series": "price",
+      "test_month": "2026-05",
+      "train_start": "2025-10-01",
+      "train_end": "2026-04-30",
+      "valid_start": "2026-04-17",
+      "test_start": "2026-05-01",
+      "test_end": "2026-05-31",
+      "train_months": 7
+    },
+    {
+      "fold": 6,
+      "series": "price",
+      "test_month": "2026-06",
+      "train_start": "2025-10-01",
+      "train_end": "2026-05-31",
+      "valid_start": "2026-05-18",
+      "test_start": "2026-06-01",
+      "test_end": "2026-06-30",
+      "train_months": 8
+    },
+    {
+      "fold": 7,
+      "series": "price",
+      "test_month": "2026-07",
+      "train_start": "2025-10-01",
+      "train_end": "2026-06-30",
+      "valid_start": "2026-06-17",
+      "test_start": "2026-07-01",
+      "test_end": "2026-07-31",
+      "train_months": 9
+    },
+    {
+      "fold": 8,
+      "series": "price",
+      "test_month": "2026-08",
+      "train_start": "2025-10-01",
+      "train_end": "2026-07-31",
+      "valid_start": "2026-07-18",
+      "test_start": "2026-08-01",
+      "test_end": "2026-08-31",
+      "train_months": 10
+    },
+    {
+      "fold": 9,
+      "series": "price",
+      "test_month": "2026-09",
+      "train_start": "2025-10-01",
+      "train_end": "2026-08-31",
+      "valid_start": "2026-08-18",
+      "test_start": "2026-09-01",
+      "test_end": "2026-09-30",
+      "train_months": 11
+    }
+  ]
+}

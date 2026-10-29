@@ -1,0 +1,76 @@
+{
+  "checked_at": "2026-10-29T10:24:51+00:00",
+  "series": {
+    "demand": {
+      "status": 200,
+      "cold_seconds": 0.053,
+      "warm_seconds": 0.028,
+      "values": 24,
+      "first": {
+        "ts_utc": "2026-09-29T23:00:00Z",
+        "value": 3605.569
+      },
+      "last": {
+        "ts_utc": "2026-09-30T22:00:00Z",
+        "value": 3775.628
+      },
+      "model": "lightgbm",
+      "version": 1
+    },
+    "wind": {
+      "status": 200,
+      "cold_seconds": 0.034,
+      "warm_seconds": 0.034,
+      "values": 24,
+      "first": {
+        "ts_utc": "2026-09-29T23:00:00Z",
+        "value": 2396.76
+      },
+      "last": {
+        "ts_utc": "2026-09-30T22:00:00Z",
+        "value": 1805.069
+      },
+      "model": "gru",
+      "version": 1
+    },
+    "price": {
+      "status": 200,
+      "cold_seconds": 0.035,
+      "warm_seconds": 0.034,
+      "values": 24,
+      "first": {
+        "ts_utc": "2026-09-29T23:00:00Z",
+        "value": 132.151
+      },
+      "last": {
+        "ts_utc": "2026-09-30T22:00:00Z",
+        "value": 147.428
+      },
+      "model": "lightgbm",
+      "version": 1
+    }
+  },
+  "models": {
+    "demand": {
+      "registered_model": "grid-forecast-demand",
+      "version": 1,
+      "model": "lightgbm",
+      "mean_fold_mae": 128.4195,
+      "unit": "MW"
+    },
+    "wind": {
+      "registered_model": "grid-forecast-wind",
+      "version": 1,
+      "model": "gru",
+      "mean_fold_mae": 540.6325,
+      "unit": "MW"
+    },
+    "price": {
+      "registered_model": "grid-forecast-price",
+      "version": 1,
+      "model": "lightgbm",
+      "mean_fold_mae": 29.8641,
+      "unit": "EUR/MWh"
+    }
+  }
+}

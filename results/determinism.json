@@ -1,0 +1,379 @@
+{
+  "run_a": "results",
+  "run_b": "results\\determinism",
+  "series": {
+    "demand": {
+      "folds": [
+        {
+          "fold": 1,
+          "test_month": "2025-10",
+          "lightgbm_mae_a": 115.97653069090566,
+          "lightgbm_mae_b": 115.97653069090566,
+          "lightgbm_identical": true,
+          "gru_mae_a": 173.00939723517305,
+          "gru_mae_b": 173.00939723517305,
+          "gru_relative_difference": 0.0
+        },
+        {
+          "fold": 2,
+          "test_month": "2025-11",
+          "lightgbm_mae_a": 216.19200411164158,
+          "lightgbm_mae_b": 216.19200411164158,
+          "lightgbm_identical": true,
+          "gru_mae_a": 227.62251026746958,
+          "gru_mae_b": 227.62251026746958,
+          "gru_relative_difference": 0.0
+        },
+        {
+          "fold": 3,
+          "test_month": "2025-12",
+          "lightgbm_mae_a": 139.21140795776364,
+          "lightgbm_mae_b": 139.21140795776364,
+          "lightgbm_identical": true,
+          "gru_mae_a": 189.4852052356351,
+          "gru_mae_b": 189.4852052356351,
+          "gru_relative_difference": 0.0
+        },
+        {
+          "fold": 4,
+          "test_month": "2026-01",
+          "lightgbm_mae_a": 169.3559911529296,
+          "lightgbm_mae_b": 169.3559911529296,
+          "lightgbm_identical": true,
+          "gru_mae_a": 412.94295919438844,
+          "gru_mae_b": 412.94295919438844,
+          "gru_relative_difference": 0.0
+        },
+        {
+          "fold": 5,
+          "test_month": "2026-02",
+          "lightgbm_mae_a": 118.08169154740229,
+          "lightgbm_mae_b": 118.08169154740229,
+          "lightgbm_identical": true,
+          "gru_mae_a": 116.5994682094029,
+          "gru_mae_b": 116.5994682094029,
+          "gru_relative_difference": 0.0
+        },
+        {
+          "fold": 6,
+          "test_month": "2026-03",
+          "lightgbm_mae_a": 147.986875400694,
+          "lightgbm_mae_b": 147.986875400694,
+          "lightgbm_identical": true,
+          "gru_mae_a": 196.85728555002518,
+          "gru_mae_b": 196.85728555002518,
+          "gru_relative_difference": 0.0
+        },
+        {
+          "fold": 7,
+          "test_month": "2026-04",
+          "lightgbm_mae_a": 146.52207224862053,
+          "lightgbm_mae_b": 146.52207224862053,
+          "lightgbm_identical": true,
+          "gru_mae_a": 199.49354306369358,
+          "gru_mae_b": 199.49354306369358,
+          "gru_relative_difference": 0.0
+        },
+        {
+          "fold": 8,
+          "test_month": "2026-05",
+          "lightgbm_mae_a": 115.42097228489932,
+          "lightgbm_mae_b": 115.42097228489932,
+          "lightgbm_identical": true,
+          "gru_mae_a": 159.3503470865885,
+          "gru_mae_b": 159.3503470865885,
+          "gru_relative_difference": 0.0
+        },
+        {
+          "fold": 9,
+          "test_month": "2026-06",
+          "lightgbm_mae_a": 101.33052640304777,
+          "lightgbm_mae_b": 101.33052640304777,
+          "lightgbm_identical": true,
+          "gru_mae_a": 114.72811296929252,
+          "gru_mae_b": 114.72811296929252,
+          "gru_relative_difference": 0.0
+        },
+        {
+          "fold": 10,
+          "test_month": "2026-07",
+          "lightgbm_mae_a": 83.26346485227398,
+          "lightgbm_mae_b": 83.26346485227398,
+          "lightgbm_identical": true,
+          "gru_mae_a": 111.29624203261508,
+          "gru_mae_b": 111.29624203261508,
+          "gru_relative_difference": 0.0
+        },
+        {
+          "fold": 11,
+          "test_month": "2026-08",
+          "lightgbm_mae_a": 92.32957264740148,
+          "lightgbm_mae_b": 92.32957264740148,
+          "lightgbm_identical": true,
+          "gru_mae_a": 89.84200341009326,
+          "gru_mae_b": 89.84200341009326,
+          "gru_relative_difference": 0.0
+        },
+        {
+          "fold": 12,
+          "test_month": "2026-09",
+          "lightgbm_mae_a": 95.36333471011096,
+          "lightgbm_mae_b": 95.36333471011096,
+          "lightgbm_identical": true,
+          "gru_mae_a": 108.8612393798828,
+          "gru_mae_b": 108.8612393798828,
+          "gru_relative_difference": 0.0
+        }
+      ],
+      "gru_worst_relative_difference": 0.0,
+      "mean_fold_mae_a": {
+        "lightgbm": 128.41953700064093,
+        "gru": 175.00735946952167
+      },
+      "mean_fold_mae_b": {
+        "lightgbm": 128.41953700064093,
+        "gru": 175.00735946952167
+      }
+    },
+    "wind": {
+      "folds": [
+        {
+          "fold": 1,
+          "test_month": "2025-10",
+          "lightgbm_mae_a": 605.4438524415218,
+          "lightgbm_mae_b": 605.4438524415218,
+          "lightgbm_identical": true,
+          "gru_mae_a": 596.7986796126827,
+          "gru_mae_b": 596.7986796126827,
+          "gru_relative_difference": 0.0
+        },
+        {
+          "fold": 2,
+          "test_month": "2025-11",
+          "lightgbm_mae_a": 713.2402805428427,
+          "lightgbm_mae_b": 713.2402805428427,
+          "lightgbm_identical": true,
+          "gru_mae_a": 681.0246826985677,
+          "gru_mae_b": 681.0246826985677,
+          "gru_relative_difference": 0.0
+        },
+        {
+          "fold": 3,
+          "test_month": "2025-12",
+          "lightgbm_mae_a": 698.0910383008388,
+          "lightgbm_mae_b": 698.0910383008388,
+          "lightgbm_identical": true,
+          "gru_mae_a": 601.6826337359029,
+          "gru_mae_b": 601.6826337359029,
+          "gru_relative_difference": 0.0
+        },
+        {
+          "fold": 4,
+          "test_month": "2026-01",
+          "lightgbm_mae_a": 758.5767101855796,
+          "lightgbm_mae_b": 758.5767101855796,
+          "lightgbm_identical": true,
+          "gru_mae_a": 664.8958746370705,
+          "gru_mae_b": 664.8958746370705,
+          "gru_relative_difference": 0.0
+        },
+        {
+          "fold": 5,
+          "test_month": "2026-02",
+          "lightgbm_mae_a": 714.5465361345274,
+          "lightgbm_mae_b": 714.5465361345274,
+          "lightgbm_identical": true,
+          "gru_mae_a": 644.7925935545421,
+          "gru_mae_b": 644.7925935545421,
+          "gru_relative_difference": 0.0
+        },
+        {
+          "fold": 6,
+          "test_month": "2026-03",
+          "lightgbm_mae_a": 604.3187100512246,
+          "lightgbm_mae_b": 604.3187100512246,
+          "lightgbm_identical": true,
+          "gru_mae_a": 537.588857585948,
+          "gru_mae_b": 537.588857585948,
+          "gru_relative_difference": 0.0
+        },
+        {
+          "fold": 7,
+          "test_month": "2026-04",
+          "lightgbm_mae_a": 597.8176186760178,
+          "lightgbm_mae_b": 597.8176186760178,
+          "lightgbm_identical": true,
+          "gru_mae_a": 560.7086628485786,
+          "gru_mae_b": 560.7086628485786,
+          "gru_relative_difference": 0.0
+        },
+        {
+          "fold": 8,
+          "test_month": "2026-05",
+          "lightgbm_mae_a": 411.0151898327363,
+          "lightgbm_mae_b": 411.0151898327363,
+          "lightgbm_identical": true,
+          "gru_mae_a": 490.37495498821295,
+          "gru_mae_b": 490.37495498821295,
+          "gru_relative_difference": 0.0
+        },
+        {
+          "fold": 9,
+          "test_month": "2026-06",
+          "lightgbm_mae_a": 380.4842616880432,
+          "lightgbm_mae_b": 380.4842616880432,
+          "lightgbm_identical": true,
+          "gru_mae_a": 451.4725065104167,
+          "gru_mae_b": 451.4725065104167,
+          "gru_relative_difference": 0.0
+        },
+        {
+          "fold": 10,
+          "test_month": "2026-07",
+          "lightgbm_mae_a": 376.6738774995263,
+          "lightgbm_mae_b": 376.6738774995263,
+          "lightgbm_identical": true,
+          "gru_mae_a": 475.56943509337725,
+          "gru_mae_b": 475.56943509337725,
+          "gru_relative_difference": 0.0
+        },
+        {
+          "fold": 11,
+          "test_month": "2026-08",
+          "lightgbm_mae_a": 296.24789987423327,
+          "lightgbm_mae_b": 296.24789987423327,
+          "lightgbm_identical": true,
+          "gru_mae_a": 309.4871388326665,
+          "gru_mae_b": 309.4871388326665,
+          "gru_relative_difference": 0.0
+        },
+        {
+          "fold": 12,
+          "test_month": "2026-09",
+          "lightgbm_mae_a": 501.2267142281771,
+          "lightgbm_mae_b": 501.2267142281771,
+          "lightgbm_identical": true,
+          "gru_mae_a": 473.19356139797634,
+          "gru_mae_b": 473.19356139797634,
+          "gru_relative_difference": 0.0
+        }
+      ],
+      "gru_worst_relative_difference": 0.0,
+      "mean_fold_mae_a": {
+        "lightgbm": 554.8068907879391,
+        "gru": 540.632465124662
+      },
+      "mean_fold_mae_b": {
+        "lightgbm": 554.8068907879391,
+        "gru": 540.632465124662
+      }
+    },
+    "price": {
+      "folds": [
+        {
+          "fold": 1,
+          "test_month": "2026-01",
+          "lightgbm_mae_a": 24.750369443135583,
+          "lightgbm_mae_b": 24.750369443135583,
+          "lightgbm_identical": true,
+          "gru_mae_a": 26.285798288160755,
+          "gru_mae_b": 26.285798288160755,
+          "gru_relative_difference": 0.0
+        },
+        {
+          "fold": 2,
+          "test_month": "2026-02",
+          "lightgbm_mae_a": 26.513115726609353,
+          "lightgbm_mae_b": 26.513115726609353,
+          "lightgbm_identical": true,
+          "gru_mae_a": 28.13912633577983,
+          "gru_mae_b": 28.13912633577983,
+          "gru_relative_difference": 0.0
+        },
+        {
+          "fold": 3,
+          "test_month": "2026-03",
+          "lightgbm_mae_a": 40.335753683104656,
+          "lightgbm_mae_b": 40.335753683104656,
+          "lightgbm_identical": true,
+          "gru_mae_a": 40.41429106743105,
+          "gru_mae_b": 40.41429106743105,
+          "gru_relative_difference": 0.0
+        },
+        {
+          "fold": 4,
+          "test_month": "2026-04",
+          "lightgbm_mae_a": 37.92238157808161,
+          "lightgbm_mae_b": 37.92238157808161,
+          "lightgbm_identical": true,
+          "gru_mae_a": 39.249464772542325,
+          "gru_mae_b": 39.249464772542325,
+          "gru_relative_difference": 0.0
+        },
+        {
+          "fold": 5,
+          "test_month": "2026-05",
+          "lightgbm_mae_a": 22.260223146242012,
+          "lightgbm_mae_b": 22.260223146242012,
+          "lightgbm_identical": true,
+          "gru_mae_a": 24.386318708850492,
+          "gru_mae_b": 24.386318708850492,
+          "gru_relative_difference": 0.0
+        },
+        {
+          "fold": 6,
+          "test_month": "2026-06",
+          "lightgbm_mae_a": 31.405516562193448,
+          "lightgbm_mae_b": 31.405516562193448,
+          "lightgbm_identical": true,
+          "gru_mae_a": 29.048695600721565,
+          "gru_mae_b": 29.048695600721565,
+          "gru_relative_difference": 0.0
+        },
+        {
+          "fold": 7,
+          "test_month": "2026-07",
+          "lightgbm_mae_a": 25.66912709504466,
+          "lightgbm_mae_b": 25.66912709504466,
+          "lightgbm_identical": true,
+          "gru_mae_a": 24.767394803775254,
+          "gru_mae_b": 24.767394803775254,
+          "gru_relative_difference": 0.0
+        },
+        {
+          "fold": 8,
+          "test_month": "2026-08",
+          "lightgbm_mae_a": 19.440201797781302,
+          "lightgbm_mae_b": 19.440201797781302,
+          "lightgbm_identical": true,
+          "gru_mae_a": 21.265542967601487,
+          "gru_mae_b": 21.265542967601487,
+          "gru_relative_difference": 0.0
+        },
+        {
+          "fold": 9,
+          "test_month": "2026-09",
+          "lightgbm_mae_a": 40.48052083961896,
+          "lightgbm_mae_b": 40.48052083961896,
+          "lightgbm_identical": true,
+          "gru_mae_a": 42.99269096840752,
+          "gru_mae_b": 42.99269096840752,
+          "gru_relative_difference": 0.0
+        }
+      ],
+      "gru_worst_relative_difference": 0.0,
+      "mean_fold_mae_a": {
+        "lightgbm": 29.864134430201286,
+        "gru": 30.72770261258559
+      },
+      "mean_fold_mae_b": {
+        "lightgbm": 29.864134430201286,
+        "gru": 30.72770261258559
+      }
+    }
+  },
+  "generated_at": "2026-10-29T10:27:53+00:00",
+  "lightgbm_identical": true,
+  "gru_within_1_percent": true,
+  "gru_worst_relative_difference": 0.0
+}
