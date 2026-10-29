@@ -1,0 +1,79 @@
+{
+  "generated_at": "2026-10-29T10:35:24+00:00",
+  "criteria": [
+    {
+      "id": 1,
+      "criterion": "A LICENCE_CHECK.md row for every source used, every download after the row's commit",
+      "outcome": "2 sources used, each with a row. Licence check committed 2026-10-28 19:25:14 UTC, first download 2026-10-28 19:25:15 UTC, last 2026-10-28 20:00:24 UTC",
+      "met": true
+    },
+    {
+      "id": 2,
+      "criterion": "Twelve monthly folds per series (36 fold runs), at least three months of training in the first fold",
+      "outcome": "33 fold runs (demand 12, wind 12, price 9), the first fold of every series trains on 3 months. The price has nine folds, not twelve, because its hourly report starts on 1 October 2025",
+      "met": false
+    },
+    {
+      "id": 3,
+      "criterion": "The leakage test passes",
+      "outcome": "tests/test_leakage.py: 17 passed",
+      "met": true
+    },
+    {
+      "id": 4,
+      "criterion": "MAE and RMSE of both baselines and both models per fold and overall in results/metrics_<series>.json and the README",
+      "outcome": "present for all 33 folds of the 3 series and as means, the README carries the mean tables and the per-fold tables",
+      "met": true
+    },
+    {
+      "id": 5,
+      "criterion": "Demand: LightGBM skill against the seasonal naive positive on at least 9 of 12 folds",
+      "outcome": "11 of 12",
+      "met": true
+    },
+    {
+      "id": 6,
+      "criterion": "Wind and price: skill per fold reported, the README says in words which model wins and where it loses",
+      "outcome": "wind champion gru (positive on 11 of 12 folds, lightgbm better in 4), price champion lightgbm (positive on 8 of 9 folds, gru better in 2). Stated in words under Reading the results",
+      "met": true
+    },
+    {
+      "id": 7,
+      "criterion": "A failure-hours table per series with at least one tag per row, the share of failure hours on holidays and clock-change days reported",
+      "outcome": "all 1204 rows tagged. Holiday share of failure hours demand / wind / price: 8.4 % / 6.2 % / 1.8 %. Clock-change share: 0.0 % / 2.1 % / 2.1 %",
+      "met": true
+    },
+    {
+      "id": 8,
+      "criterion": "MLflow: 36 fold runs, 6 aggregate runs, three registered models with the champion alias",
+      "outcome": "33 fold runs, 6 aggregate runs, 3 champion runs, 3 registered models with the alias champion. Three fold runs short of 36 because the price has nine folds",
+      "met": false
+    },
+    {
+      "id": 9,
+      "criterion": "POST /forecast returns 24 timestamped values per series in under 2 seconds on CPU from a warm process",
+      "outcome": "24 values for every series, warm response at most 0.034 s, cold at most 0.053 s (FastAPI TestClient)",
+      "met": true
+    },
+    {
+      "id": 10,
+      "criterion": "Two full runs with the same seed give identical LightGBM metrics and GRU metrics within 1 %",
+      "outcome": "LightGBM MAE and RMSE identical on every fold: yes. Largest GRU fold-MAE difference 0.000 %",
+      "met": true
+    },
+    {
+      "id": 11,
+      "criterion": "Missing data per month under 5 % for every month kept, dropped months listed",
+      "outcome": "highest missing share 0.0 % over 42 series-months, dropped: none",
+      "met": true
+    },
+    {
+      "id": 12,
+      "criterion": "Smoke under 10 minutes, pytest green, no secrets, README numbers asserted",
+      "outcome": "smoke 112 s on the build PC with smoke_ok yes. tests/test_no_secrets.py and tests/test_readme_numbers.py are part of pytest -q",
+      "met": true
+    }
+  ],
+  "met": 10,
+  "of": 12
+}
