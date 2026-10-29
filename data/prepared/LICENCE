@@ -1,0 +1,4 @@
+Derived from EirGrid Group data (EirGrid Library System Data Qtr Hourly workbooks and SEMOpx report EA-025)
+under the EirGrid Group Open Data Licence, https://www.smartgriddashboard.com/all/open-data-license/ .
+Supported by EirGrid Group Data.
+Hourly means in UTC, cleaned as described in README.md. The code in this repository is MIT licensed.

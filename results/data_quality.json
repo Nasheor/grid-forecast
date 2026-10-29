@@ -1,0 +1,404 @@
+{
+  "generated_at": "2026-10-28T20:00:30+00:00",
+  "series": {
+    "demand": {
+      "series": "demand",
+      "months": {
+        "2025-07": {
+          "expected_hours": 744,
+          "hours_present": 744,
+          "missing_share": 0.0,
+          "interpolated_hours": 0,
+          "long_gap_hours": 0,
+          "partial_hours": 0,
+          "kept": true
+        },
+        "2025-08": {
+          "expected_hours": 744,
+          "hours_present": 744,
+          "missing_share": 0.0,
+          "interpolated_hours": 0,
+          "long_gap_hours": 0,
+          "partial_hours": 0,
+          "kept": true
+        },
+        "2025-09": {
+          "expected_hours": 720,
+          "hours_present": 720,
+          "missing_share": 0.0,
+          "interpolated_hours": 0,
+          "long_gap_hours": 0,
+          "partial_hours": 0,
+          "kept": true
+        },
+        "2025-10": {
+          "expected_hours": 745,
+          "hours_present": 745,
+          "missing_share": 0.0,
+          "interpolated_hours": 0,
+          "long_gap_hours": 0,
+          "partial_hours": 0,
+          "kept": true
+        },
+        "2025-11": {
+          "expected_hours": 720,
+          "hours_present": 720,
+          "missing_share": 0.0,
+          "interpolated_hours": 0,
+          "long_gap_hours": 0,
+          "partial_hours": 0,
+          "kept": true
+        },
+        "2025-12": {
+          "expected_hours": 744,
+          "hours_present": 744,
+          "missing_share": 0.0,
+          "interpolated_hours": 0,
+          "long_gap_hours": 0,
+          "partial_hours": 0,
+          "kept": true
+        },
+        "2026-01": {
+          "expected_hours": 744,
+          "hours_present": 744,
+          "missing_share": 0.0,
+          "interpolated_hours": 0,
+          "long_gap_hours": 0,
+          "partial_hours": 0,
+          "kept": true
+        },
+        "2026-02": {
+          "expected_hours": 672,
+          "hours_present": 672,
+          "missing_share": 0.0,
+          "interpolated_hours": 0,
+          "long_gap_hours": 0,
+          "partial_hours": 0,
+          "kept": true
+        },
+        "2026-03": {
+          "expected_hours": 743,
+          "hours_present": 743,
+          "missing_share": 0.0,
+          "interpolated_hours": 0,
+          "long_gap_hours": 0,
+          "partial_hours": 0,
+          "kept": true
+        },
+        "2026-04": {
+          "expected_hours": 720,
+          "hours_present": 720,
+          "missing_share": 0.0,
+          "interpolated_hours": 0,
+          "long_gap_hours": 0,
+          "partial_hours": 0,
+          "kept": true
+        },
+        "2026-05": {
+          "expected_hours": 744,
+          "hours_present": 744,
+          "missing_share": 0.0,
+          "interpolated_hours": 0,
+          "long_gap_hours": 0,
+          "partial_hours": 0,
+          "kept": true
+        },
+        "2026-06": {
+          "expected_hours": 720,
+          "hours_present": 720,
+          "missing_share": 0.0,
+          "interpolated_hours": 0,
+          "long_gap_hours": 0,
+          "partial_hours": 0,
+          "kept": true
+        },
+        "2026-07": {
+          "expected_hours": 744,
+          "hours_present": 744,
+          "missing_share": 0.0,
+          "interpolated_hours": 0,
+          "long_gap_hours": 0,
+          "partial_hours": 0,
+          "kept": true
+        },
+        "2026-08": {
+          "expected_hours": 744,
+          "hours_present": 744,
+          "missing_share": 0.0,
+          "interpolated_hours": 0,
+          "long_gap_hours": 0,
+          "partial_hours": 0,
+          "kept": true
+        },
+        "2026-09": {
+          "expected_hours": 720,
+          "hours_present": 720,
+          "missing_share": 0.0,
+          "interpolated_hours": 0,
+          "long_gap_hours": 0,
+          "partial_hours": 0,
+          "kept": true
+        }
+      },
+      "dropped_months": [],
+      "rule": "a month is dropped when its missing share is 5% or more"
+    },
+    "wind": {
+      "series": "wind",
+      "months": {
+        "2025-07": {
+          "expected_hours": 744,
+          "hours_present": 744,
+          "missing_share": 0.0,
+          "interpolated_hours": 0,
+          "long_gap_hours": 0,
+          "partial_hours": 0,
+          "kept": true
+        },
+        "2025-08": {
+          "expected_hours": 744,
+          "hours_present": 744,
+          "missing_share": 0.0,
+          "interpolated_hours": 0,
+          "long_gap_hours": 0,
+          "partial_hours": 0,
+          "kept": true
+        },
+        "2025-09": {
+          "expected_hours": 720,
+          "hours_present": 720,
+          "missing_share": 0.0,
+          "interpolated_hours": 0,
+          "long_gap_hours": 0,
+          "partial_hours": 0,
+          "kept": true
+        },
+        "2025-10": {
+          "expected_hours": 745,
+          "hours_present": 745,
+          "missing_share": 0.0,
+          "interpolated_hours": 0,
+          "long_gap_hours": 0,
+          "partial_hours": 0,
+          "kept": true
+        },
+        "2025-11": {
+          "expected_hours": 720,
+          "hours_present": 720,
+          "missing_share": 0.0,
+          "interpolated_hours": 0,
+          "long_gap_hours": 0,
+          "partial_hours": 0,
+          "kept": true
+        },
+        "2025-12": {
+          "expected_hours": 744,
+          "hours_present": 744,
+          "missing_share": 0.0,
+          "interpolated_hours": 0,
+          "long_gap_hours": 0,
+          "partial_hours": 0,
+          "kept": true
+        },
+        "2026-01": {
+          "expected_hours": 744,
+          "hours_present": 744,
+          "missing_share": 0.0,
+          "interpolated_hours": 0,
+          "long_gap_hours": 0,
+          "partial_hours": 0,
+          "kept": true
+        },
+        "2026-02": {
+          "expected_hours": 672,
+          "hours_present": 672,
+          "missing_share": 0.0,
+          "interpolated_hours": 0,
+          "long_gap_hours": 0,
+          "partial_hours": 0,
+          "kept": true
+        },
+        "2026-03": {
+          "expected_hours": 743,
+          "hours_present": 743,
+          "missing_share": 0.0,
+          "interpolated_hours": 0,
+          "long_gap_hours": 0,
+          "partial_hours": 0,
+          "kept": true
+        },
+        "2026-04": {
+          "expected_hours": 720,
+          "hours_present": 720,
+          "missing_share": 0.0,
+          "interpolated_hours": 0,
+          "long_gap_hours": 0,
+          "partial_hours": 0,
+          "kept": true
+        },
+        "2026-05": {
+          "expected_hours": 744,
+          "hours_present": 744,
+          "missing_share": 0.0,
+          "interpolated_hours": 0,
+          "long_gap_hours": 0,
+          "partial_hours": 0,
+          "kept": true
+        },
+        "2026-06": {
+          "expected_hours": 720,
+          "hours_present": 720,
+          "missing_share": 0.0,
+          "interpolated_hours": 0,
+          "long_gap_hours": 0,
+          "partial_hours": 0,
+          "kept": true
+        },
+        "2026-07": {
+          "expected_hours": 744,
+          "hours_present": 744,
+          "missing_share": 0.0,
+          "interpolated_hours": 0,
+          "long_gap_hours": 0,
+          "partial_hours": 0,
+          "kept": true
+        },
+        "2026-08": {
+          "expected_hours": 744,
+          "hours_present": 744,
+          "missing_share": 0.0,
+          "interpolated_hours": 0,
+          "long_gap_hours": 0,
+          "partial_hours": 0,
+          "kept": true
+        },
+        "2026-09": {
+          "expected_hours": 720,
+          "hours_present": 720,
+          "missing_share": 0.0,
+          "interpolated_hours": 0,
+          "long_gap_hours": 0,
+          "partial_hours": 0,
+          "kept": true
+        }
+      },
+      "dropped_months": [],
+      "rule": "a month is dropped when its missing share is 5% or more"
+    },
+    "price": {
+      "series": "price",
+      "months": {
+        "2025-10": {
+          "expected_hours": 745,
+          "hours_present": 745,
+          "missing_share": 0.0,
+          "interpolated_hours": 0,
+          "long_gap_hours": 0,
+          "partial_hours": 0,
+          "kept": true
+        },
+        "2025-11": {
+          "expected_hours": 720,
+          "hours_present": 720,
+          "missing_share": 0.0,
+          "interpolated_hours": 0,
+          "long_gap_hours": 0,
+          "partial_hours": 0,
+          "kept": true
+        },
+        "2025-12": {
+          "expected_hours": 744,
+          "hours_present": 744,
+          "missing_share": 0.0,
+          "interpolated_hours": 0,
+          "long_gap_hours": 0,
+          "partial_hours": 0,
+          "kept": true
+        },
+        "2026-01": {
+          "expected_hours": 744,
+          "hours_present": 744,
+          "missing_share": 0.0,
+          "interpolated_hours": 0,
+          "long_gap_hours": 0,
+          "partial_hours": 0,
+          "kept": true
+        },
+        "2026-02": {
+          "expected_hours": 672,
+          "hours_present": 672,
+          "missing_share": 0.0,
+          "interpolated_hours": 0,
+          "long_gap_hours": 0,
+          "partial_hours": 0,
+          "kept": true
+        },
+        "2026-03": {
+          "expected_hours": 743,
+          "hours_present": 743,
+          "missing_share": 0.0,
+          "interpolated_hours": 0,
+          "long_gap_hours": 0,
+          "partial_hours": 0,
+          "kept": true
+        },
+        "2026-04": {
+          "expected_hours": 720,
+          "hours_present": 720,
+          "missing_share": 0.0,
+          "interpolated_hours": 0,
+          "long_gap_hours": 0,
+          "partial_hours": 0,
+          "kept": true
+        },
+        "2026-05": {
+          "expected_hours": 744,
+          "hours_present": 744,
+          "missing_share": 0.0,
+          "interpolated_hours": 0,
+          "long_gap_hours": 0,
+          "partial_hours": 0,
+          "kept": true
+        },
+        "2026-06": {
+          "expected_hours": 720,
+          "hours_present": 720,
+          "missing_share": 0.0,
+          "interpolated_hours": 0,
+          "long_gap_hours": 0,
+          "partial_hours": 0,
+          "kept": true
+        },
+        "2026-07": {
+          "expected_hours": 744,
+          "hours_present": 744,
+          "missing_share": 0.0,
+          "interpolated_hours": 0,
+          "long_gap_hours": 0,
+          "partial_hours": 0,
+          "kept": true
+        },
+        "2026-08": {
+          "expected_hours": 744,
+          "hours_present": 744,
+          "missing_share": 0.0,
+          "interpolated_hours": 0,
+          "long_gap_hours": 0,
+          "partial_hours": 0,
+          "kept": true
+        },
+        "2026-09": {
+          "expected_hours": 720,
+          "hours_present": 720,
+          "missing_share": 0.0,
+          "interpolated_hours": 0,
+          "long_gap_hours": 0,
+          "partial_hours": 0,
+          "kept": true
+        }
+      },
+      "dropped_months": [],
+      "rule": "a month is dropped when its missing share is 5% or more"
+    }
+  }
+}
