@@ -5,7 +5,9 @@ and each aggregate to MLflow, writes the failure-hour tables and plots, refits t
 the whole history and registers it with the ``champion`` alias, checks the API with the TestClient, and
 writes every ``results/*.json`` plus the README tables. ``smoke`` is the same chain on the last two folds with
 LightGBM capped at 200 rounds and the GRU at 3 epochs, logged to ``mlruns_smoke/`` and written to
-``results/smoke/``, so it never overwrites the numbers of the full run.
+``results/smoke/``, so it never overwrites the numbers of the full run. It checks that the README carries
+every number a fresh render of the results files produces. ``compare_runs`` compares two full runs for the
+determinism criterion.
 """
 from __future__ import annotations
 
@@ -18,11 +20,12 @@ from pathlib import Path
 import pandas as pd
 
 from . import DOCS, PERIOD_END, PREPARED, RESULTS, ROOT, SEED, SERIES, SERIES_START, mlflow_uri
+from .acceptance import write_acceptance
 from .failures import write_failures
 from .features import SeriesTable, build_dataset, days_between, feature_hash
 from .models import make_model
 from .prepare import load_prepared
-from .report import failures_table, results_table, update_readme, write_numbers
+from .report import build_readme, failures_table, render_readme, results_table, write_numbers
 from .tracking import log_aggregate, log_fold, register_champion, run_counts, setup
 from .walkforward import MODEL_NAMES, VALID_DAYS, folds_for, run_fold, summarise
 
@@ -148,12 +151,11 @@ def run(n_folds: int | None = None, lgbm_rounds: int = 2000, gru_epochs: int = 2
     summary["finished_at"] = _now()
     summary["total_seconds"] = round(time.perf_counter() - t_start, 1)
     (results / "summary.json").write_text(json.dumps(summary, indent=2), encoding="utf-8")
-    results_md, numbers = results_table(summary)
-    failures_md, fnumbers = failures_table(failures)
-    numbers.update(fnumbers)
+    results_md, _ = results_table(summary)
+    failures_md, _ = failures_table({s: v["failures"] for s, v in summary["series"].items()})
     if write_readme:
-        update_readme(results_md, failures_md)
-        write_numbers(numbers, results / "readme_numbers.json")
+        write_acceptance(results)
+        build_readme(results)
     print(results_md)
     print(failures_md)
     return summary
@@ -174,11 +176,7 @@ def smoke() -> dict:
     full = RESULTS / "summary.json"
     readme_ok = False
     if full.exists():
-        full_summary = json.loads(full.read_text(encoding="utf-8"))
-        results_md, numbers = results_table(full_summary)
-        failures = {s: v["failures"] for s, v in full_summary["series"].items()}
-        _, fnumbers = failures_table(failures)
-        numbers.update(fnumbers)
+        _, numbers = render_readme(RESULTS)
         write_numbers(numbers, RESULTS / "readme_numbers.json")
         readme = (ROOT / "README.md").read_text(encoding="utf-8")
         readme_ok = all(v in readme for v in numbers.values())

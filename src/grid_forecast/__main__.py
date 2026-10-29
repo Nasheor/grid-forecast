@@ -4,7 +4,9 @@
 the licence check, ``prepare`` cleans them to hourly UTC frames, ``run`` walks the monthly folds with both
 models, logs to MLflow, registers the champions, checks the API and writes ``results/`` and the README
 tables, ``smoke`` is the short version of ``run`` (two folds, capped rounds and epochs, under ten minutes)
-that writes ``results/smoke.json`` and ``results/readme_numbers.json``, and ``serve`` starts the API.
+that writes ``results/smoke.json`` and ``results/readme_numbers.json``, ``determinism`` compares a second full
+run in ``results/determinism/`` with the first, ``readme`` rewrites the README blocks and the acceptance record
+from the results files, and ``serve`` starts the API.
 """
 from __future__ import annotations
 
@@ -36,6 +38,7 @@ def main(argv: list[str] | None = None) -> int:
     r.add_argument("--no-readme", action="store_true", help="do not rewrite the README tables or results/readme_numbers.json")
     sub.add_parser("smoke", help="two folds, capped models, own MLflow store, results/smoke.json")
     sub.add_parser("determinism", help="compare results/ with results/determinism/ (a second full run with the same seed)")
+    sub.add_parser("readme", help="rewrite the README blocks and results/acceptance.json from results/*.json")
     s = sub.add_parser("serve", help="start the FastAPI service with uvicorn")
     s.add_argument("--host", default="127.0.0.1")
     s.add_argument("--port", type=int, default=8000)
@@ -78,6 +81,14 @@ def main(argv: list[str] | None = None) -> int:
 
         rep = compare_runs()
         return 0 if rep["lightgbm_identical"] and rep["gru_within_1_percent"] else 1
+    if args.cmd == "readme":
+        from .acceptance import write_acceptance
+        from .report import build_readme
+
+        acc = write_acceptance()
+        numbers = build_readme()
+        print(f"acceptance: {acc['met']} of {acc['of']} criteria met, {len(numbers)} README numbers written")
+        return 0
     if args.cmd == "serve":
         import uvicorn
 

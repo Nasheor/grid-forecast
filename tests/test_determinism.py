@@ -1,5 +1,7 @@
-"""Two fits with the same seed give the same LightGBM numbers and GRU numbers within 1 %."""
+"""Two fits with the same seed give the same LightGBM numbers and GRU numbers within 1 %, in process and
+across the two full runs recorded in results/determinism.json."""
 import datetime as dt
+import json
 
 import numpy as np
 import pytest
@@ -34,3 +36,16 @@ def test_models_beat_nothing_obvious(small_fold):
     assert rec["models"]["lightgbm"]["mae"] > 0
     assert rec["scored_hours"] == 24 * 31
     assert set(rec["models"]) == {"seasonal_naive", "last_week", "lightgbm", "gru"}
+
+
+def test_the_two_full_runs_match(repo_root):
+    path = repo_root / "results" / "determinism.json"
+    assert path.exists(), "run the second full run into results/determinism and then python -m grid_forecast determinism"
+    rep = json.loads(path.read_text(encoding="utf-8"))
+    summary = json.loads((repo_root / "results" / "summary.json").read_text(encoding="utf-8"))
+    assert rep["lightgbm_identical"] is True
+    assert rep["gru_within_1_percent"] is True
+    assert rep["gru_worst_relative_difference"] < 0.01
+    for s, v in rep["series"].items():
+        assert len(v["folds"]) == summary["series"][s]["folds"]
+        assert all(f["lightgbm_identical"] for f in v["folds"])

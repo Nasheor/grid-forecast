@@ -1,4 +1,8 @@
-"""The API serves 24 timestamped values per series from a registered champion, fast, and refuses bad origins."""
+"""The API serves 24 timestamped values per series from a registered champion, fast, and refuses bad origins.
+
+The wind champion here is a GRU, so the path that hands the registered model a frame without a target column
+is covered as well as the LightGBM path.
+"""
 import datetime as dt
 import os
 import time
@@ -10,6 +14,8 @@ from grid_forecast import SERIES
 from grid_forecast.features import build_dataset, days_between, origin_for_day
 from grid_forecast.models import make_model
 from grid_forecast.tracking import register_champion, setup
+
+EXPECTED = {"demand": "lightgbm", "wind": "gru", "price": "lightgbm"}
 
 
 @pytest.fixture(scope="module")
@@ -23,7 +29,7 @@ def registry(tables, tmp_path_factory):
         day = dataset["day"]
         train = dataset[day < dt.date(2025, 11, 17)]
         valid = dataset[day >= dt.date(2025, 11, 17)]
-        model = make_model("lightgbm", s, max_rounds=40, early_stopping_rounds=10)
+        model = make_model("gru", s, epochs=1) if EXPECTED[s] == "gru" else make_model("lightgbm", s, max_rounds=40, early_stopping_rounds=10)
         model.fit(train, valid)
         register_champion(s, model, valid.tail(24), 12.5, 3)
     return uri
@@ -42,7 +48,7 @@ def test_healthz_and_models(client):
     assert client.get("/healthz").json()["status"] == "ok"
     models = client.get("/models").json()
     for s in SERIES:
-        assert models[s]["version"] == 1 and models[s]["model"] == "lightgbm"
+        assert models[s]["version"] == 1 and models[s]["model"] == EXPECTED[s]
 
 
 @pytest.mark.parametrize("series", SERIES)
@@ -58,7 +64,7 @@ def test_forecast_returns_24_values_fast(client, series):
     j = r.json()
     assert len(j["values"]) == 24 and len(j["seasonal_naive"]) == 24
     assert j["values"][0]["ts_utc"] == "2025-12-15T00:00:00Z"
-    assert j["model"] == "lightgbm" and j["version"] == 1
+    assert j["model"] == EXPECTED[series] and j["version"] == 1
     assert warm < 2.0
 
 
