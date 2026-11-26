@@ -168,10 +168,19 @@ Local file store under `mlruns/` (`MLFLOW_TRACKING_URI=file:./mlruns`, with `MLF
 
 `POST /forecast` with `{"series": "demand", "origin_utc": "2026-09-29T23:00:00Z"}` (that is 00:00 Europe/Dublin on 30 September 2026) returns 24 hourly values with UTC timestamps, the model name and registry version, and the seasonal-naive values for the same origin. For the price the origin is 10:00 Europe/Dublin on the day before the forecast day, for example `2026-09-29T09:00:00Z` for 30 September. An origin that is not one of these is refused with a 422 that names the nearest allowed one. `GET /models` lists the champions with their fold-mean MAE. `GET /healthz` answers when the process is up. The champion is loaded from the registry once per series. `results/api_check.json` records the cold and warm response times measured through the FastAPI `TestClient`.
 
+## Requirements
+
+- Python 3.11 or newer and git.
+- The commands below are written for Windows (`.venv\Scripts\`). On Linux or macOS use `.venv/bin/` instead.
+- Every dependency is pinned in `pyproject.toml`, and `requirements.lock` records the full resolved set.
+- No API key and no account. The data is public and downloaded by the `download` command.
+- PyTorch is installed from the CPU wheel index first, as shown below. No GPU is needed.
+- A full run takes about nine minutes on a desktop CPU and the smoke run about two.
+
 ## How to run
 
 ```
-C:\Users\nagar\anaconda3\python.exe -m venv .venv
+python -m venv .venv
 .venv\Scripts\pip install torch --index-url https://download.pytorch.org/whl/cpu
 .venv\Scripts\pip install -e .[dev]
 .venv\Scripts\python -m pytest -q
@@ -217,6 +226,26 @@ The twelve criteria of the build specification, each measured from the results f
 
 One year of hourly data, one bidding zone, no weather inputs, no intraday or balancing markets, point forecasts only. The price has nine folds, not twelve, for the reason given above, so there are 33 fold runs rather than the 36 the specification counted on. Nothing here is compared with EirGrid's or SEMOpx's own forecasts. The GRU is small and trained on a few hundred origins per fold, so its numbers say what a small recurrent model does on this much data, not what the architecture can do, and its two training settings were chosen with sight of test-month error on seven folds. LightGBM was left at fixed settings.
 
+## Repository layout
+
+| Path | What it holds |
+|---|---|
+| `src/grid_forecast/download.py`, `prepare.py` | Fetching the three source series and cleaning each to an hourly UTC frame |
+| `src/grid_forecast/features.py`, `baselines.py`, `models.py` | Features known at the forecast origin, the two baselines, LightGBM and the GRU |
+| `src/grid_forecast/walkforward.py`, `failures.py` | The monthly walk-forward folds, the scoring and the worst-hours analysis |
+| `src/grid_forecast/tracking.py`, `api.py` | The MLflow logging and registry, and the FastAPI service over the registered champions |
+| `src/grid_forecast/pipeline.py`, `report.py`, `acceptance.py` | The full and smoke runs, the README blocks and the acceptance record |
+| `src/grid_forecast/__main__.py` | The command line: `download`, `prepare`, `run`, `determinism`, `smoke`, `readme`, `serve` |
+| `data/prepared/` | The cleaned hourly series, redistributed under the EirGrid Group Open Data Licence |
+| `docs/` | The failure plots |
+| `results/` | The JSON files behind every number in this README |
+| `tests/` | The test suite |
+| `LICENCE_CHECK.md` | Source, licence and permitted use of every dataset |
+
 ## Licence
 
 MIT, Avinash Nagarajan. The data remain under the EirGrid Group Open Data Licence. Supported by EirGrid Group Data.
+
+## Author
+
+Avinash Nagarajan ([github.com/Nasheor](https://github.com/Nasheor)). Questions and bug reports are welcome through the issue tracker of this repository.
